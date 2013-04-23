@@ -1,0 +1,39 @@
+#!/bin/sh -e
+### BEGIN INIT INFO
+# Provides:          thinkdemo
+# Required-Start:    
+# Required-Stop:
+# Default-Start:     1 2 3 4 5
+# Default-Stop:
+# Short-Description: Think demo start / stop.
+### END INIT INFO
+
+ROOT=/var/exosense
+ERL_APP=thinkdemo
+
+case "$1" in
+  start) 
+	export KVDB_BACKENDS=ets
+
+        #
+        # Compile config file into binary format
+        #
+	if [ ! -f $ROOT/setup/start.boot ]
+	then
+	    /usr/bin/escript /usr/lib/erlang/lib/setup-*/ebin/setup_gen.beam $ERL_APP /usr/lib/erlang/lib/${ERL_APP}-*/priv/setup.config $ROOT/setup
+	fi
+	# Launch it!
+	nohup /usr/bin/erl -noshell -boot $ROOT/setup/start -config $ROOT/setup/sys > /tmp/exodev.log 2>&1 &
+	echo $! > /tmp/${ERL_APP}.pid 
+	;;
+
+  stop) 
+	kill $(cat /tmp/${ERL_APP}.pid)
+	exit 0 
+	;;
+
+  *) 
+	echo "Usage: $0 {start|stop}" >&2
+	exit 1 
+	;;
+esac
