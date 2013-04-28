@@ -8,12 +8,18 @@
 # Short-Description: Think demo start / stop.
 ### END INIT INFO
 
-ROOT=/var/exosense
+ROOT=/home/exosense
 ERL_APP=thinkdemo
 
 case "$1" in
   start) 
 	export KVDB_BACKENDS=ets
+
+	if [ ! -d $ROOT ]
+	then
+	    mkdir -p $ROOT
+	fi
+	cd $ROOT
 
         #
         # Compile config file into binary format
