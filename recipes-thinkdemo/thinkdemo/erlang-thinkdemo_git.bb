@@ -22,6 +22,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=815ca599c9df247a0c7f619bab123dad"
 # the erlang runtime system and the Exosense Device modules are included
 # through this dependency.
 DEPENDS += " exosense"
+RDEPENDS += " iproute2"
 
 # Source revision to fetch from the SRC_URI
 SRCREV="AUTOINC"
