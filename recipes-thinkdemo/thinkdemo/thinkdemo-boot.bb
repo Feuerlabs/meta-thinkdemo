@@ -41,11 +41,12 @@ do_install() {
     # ${D}${sbindir} is where executable files are to be stored (e.g. /sbin).
     #
     install -d ${D}${sysconfdir}/init.d
-    install -d ${D}${sysconfdir}/rcS.d
-    install -d ${D}${sysconfdir}/rc1.d
-    install -d ${D}${sysconfdir}/rc2.d
-    install -d ${D}${sysconfdir}/rc3.d
-    install -d ${D}${sysconfdir}/rc4.d
+    # Removed multiple runlevel installation to avoid multiple starts during boot
+    #install -d ${D}${sysconfdir}/rcS.d
+    #install -d ${D}${sysconfdir}/rc1.d
+    #install -d ${D}${sysconfdir}/rc2.d
+    #install -d ${D}${sysconfdir}/rc3.d
+    #install -d ${D}${sysconfdir}/rc4.d
     install -d ${D}${sysconfdir}/rc5.d
 
     #
@@ -63,10 +64,11 @@ do_install() {
     #   rc5.d/S90run-script will be called (with %1='start') when entering runlevel 5.
     #   rc5.d/K90run-script will be called (with %1='stop') when exiting runlevel 5.
     #
-    ln -sf ../init.d/exodev_ctl     ${D}${sysconfdir}/rcS.d/S90exodev_ctl
-    ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc1.d/K90exodev_ctl
-    ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc2.d/K90exodev_ctl
-    ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc3.d/K90exodev_ctl
-    ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc4.d/K90exodev_ctl
+    # Removed multiple linking to avoid multiple start invocation during boot
+#    ln -sf ../init.d/exodev_ctl     ${D}${sysconfdir}/rcS.d/S90exodev_ctl
+#    ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc1.d/K90exodev_ctl
+#    ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc2.d/K90exodev_ctl
+#    ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc3.d/K90exodev_ctl
+#    ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc4.d/K90exodev_ctl
     ln -sf ../init.d/exodev_ctl      ${D}${sysconfdir}/rc5.d/S90exodev_ctl
 }

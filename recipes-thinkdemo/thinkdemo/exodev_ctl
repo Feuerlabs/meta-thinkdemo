@@ -15,6 +15,9 @@ case "$1" in
   start) 
 	export KVDB_BACKENDS=ets
 
+	# Override stupid yocto overwrite that I am too lazy to fix.
+	echo '* * tmobile' > /etc/ppp/pap-secrets
+	sh /etc/ppp/ppp-start
 	if [ ! -d $ROOT ]
 	then
 	    mkdir -p $ROOT
@@ -29,7 +32,7 @@ case "$1" in
 	    /usr/bin/escript /usr/lib/erlang/lib/setup-*/ebin/setup_gen.beam $ERL_APP /usr/lib/erlang/lib/${ERL_APP}-*/priv/setup.config $ROOT/setup
 	fi
 	# Launch it!
-	nohup /usr/bin/erl -noshell -boot $ROOT/setup/start -config $ROOT/setup/sys > /tmp/exodev.log 2>&1 &
+	nohup sh -c "(sleep 30; /usr/bin/erl -noshell -boot $ROOT/setup/start -config $ROOT/setup/sys > /tmp/exodev.log 2>&1)" &
 	echo $! > /tmp/${ERL_APP}.pid 
 	;;
 
