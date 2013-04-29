@@ -18,6 +18,11 @@ case "$1" in
 	# Override stupid yocto overwrite that I am too lazy to fix.
 	echo '* * tmobile' > /etc/ppp/pap-secrets
 	sh /etc/ppp/ppp-start
+
+	# Set the CAN bus speed and bring up the interface
+	/bin/ip link set can0 up type can bitrate 500000
+	/sbin/ifconfig can0 up
+
 	if [ ! -d $ROOT ]
 	then
 	    mkdir -p $ROOT
